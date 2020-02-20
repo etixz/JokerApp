@@ -40,7 +40,7 @@ public class StartFragment extends Fragment {
 
         startButton = rootView.findViewById(R.id.btn_start_navigation);
         startButton.setOnClickListener(startListener);
-        
+
         return rootView;
     }
 
