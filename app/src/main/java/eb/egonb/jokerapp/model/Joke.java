@@ -1,6 +1,8 @@
 package eb.egonb.jokerapp.model;
 
-public class Joke {
+import java.io.Serializable;
+
+public class Joke implements Serializable {
 
     private String setup, punchline;
 

@@ -23,7 +23,7 @@ public class JokeViewModel extends ViewModel {
 
         newJokes.add(new Joke("Het is Blauw en weegt niet veel", "Lichtblauw"));
         newJokes.add(new Joke("Het is zwart en als het uit een boom valt is uw kachel kapot", "Uw kachel"));
-        newJokes.add(new Joke("Het is grijs en als het in uw vliegt zijt ge dood", "Nen Boeing"));
+        newJokes.add(new Joke("Het is grijs en als het in uw oog vliegt zijt ge dood", "Nen Boeing"));
 
         jokes.setValue(newJokes);
     }
