@@ -29,4 +29,7 @@
             android:name="passedJoke"
             app:argType="eb.egonb.jokerapp.model.Joke" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="eb.egonb.jokerapp.fragments.SettingsFragment"/>
 </navigation>

@@ -5,4 +5,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="str_btn_start_navigation">Start!</string>
     <string name="str_btn_punchline">Punchline</string>
+
+    <string name="pref_group_title_quality">Quality Options</string>
+    <string name="pref_swi_title_only_good_jokes">Only show good jokes</string>
+    <string name="str_mi_settings">Settings</string>
 </resources>

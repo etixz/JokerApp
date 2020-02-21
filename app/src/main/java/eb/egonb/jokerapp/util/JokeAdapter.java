@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,9 +19,10 @@ import java.util.ArrayList;
 import eb.egonb.jokerapp.R;
 import eb.egonb.jokerapp.model.Joke;
 
-public class JokeAdapter extends RecyclerView.Adapter<JokeAdapter.JokeViewHolder> {
+public class JokeAdapter extends RecyclerView.Adapter<JokeAdapter.JokeViewHolder> implements Filterable {
 
-     class JokeViewHolder extends RecyclerView.ViewHolder{
+
+    class JokeViewHolder extends RecyclerView.ViewHolder{
 
         final TextView tvSetup;
         final Button btnPunchline;
@@ -48,10 +51,12 @@ public class JokeAdapter extends RecyclerView.Adapter<JokeAdapter.JokeViewHolder
 
     }
 
-    ArrayList<Joke> items;
+    private ArrayList<Joke> items;
+    private ArrayList<Joke> OGItems;
 
     public JokeAdapter() {
         items = new ArrayList<>();
+        OGItems = new ArrayList<>();
     }
 
 
@@ -77,6 +82,39 @@ public class JokeAdapter extends RecyclerView.Adapter<JokeAdapter.JokeViewHolder
     }
 
     public void addItems(ArrayList<Joke> jokes){
+        items.clear();
         items.addAll(jokes);
+        OGItems.clear();
+        OGItems.addAll(jokes);
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                ArrayList<Joke> filteredArray = new ArrayList<>();
+                String input = charSequence.toString();
+                if(input.isEmpty()){
+                    items = OGItems;
+                }else{
+                    items = OGItems;
+                    for(Joke element : items){
+                        if(element.getSetup().contains(charSequence)){
+                            filteredArray.add(element);
+                        }
+                    }
+                    items = filteredArray;
+
+                }
+                return null;
+
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                notifyDataSetChanged();
+            }
+        };
     }
 }

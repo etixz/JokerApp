@@ -3,6 +3,8 @@ package eb.egonb.jokerapp.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -10,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -25,6 +29,19 @@ import eb.egonb.jokerapp.util.JokeAdapter;
  */
 public class JokeListFragment extends Fragment {
 
+    private SearchView.OnQueryTextListener searchListener = new SearchView.OnQueryTextListener() {
+        @Override
+        public boolean onQueryTextSubmit(String query) {
+            return false;
+        }
+
+        @Override
+        public boolean onQueryTextChange(String newText) {
+            adapter.getFilter().filter(newText);
+            return false;
+        }
+    };
+    private JokeAdapter adapter;
 
     public JokeListFragment() {
         // Required empty public constructor
@@ -37,6 +54,8 @@ public class JokeListFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_joke_list, container, false);
 
+        setHasOptionsMenu(true);
+
         //verwijzing naar UI
         RecyclerView rvJokes = rootView.findViewById(R.id.rv_jokes);
 
@@ -47,7 +66,7 @@ public class JokeListFragment extends Fragment {
         //Opvulling recycler, kan als lijst of grid afh van manager
         rvJokes.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         //adapter, nodig om data om te zetten in iets visueel
-        JokeAdapter adapter = new JokeAdapter();
+        adapter = new JokeAdapter();
         rvJokes.setAdapter(adapter);
 
         //verwijzen naar ViewModel, waar staat alle data
@@ -58,8 +77,16 @@ public class JokeListFragment extends Fragment {
                 adapter.addItems(jokes);
             }
         });
-
         return rootView;
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.search_menu, menu);
+
+        SearchView searchView = (SearchView) menu.findItem(R.id.mi_search).getActionView();
+        searchView.setOnQueryTextListener(searchListener);
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 }
